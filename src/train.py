@@ -1,4 +1,6 @@
 import matplotlib.pyplot as plt
+import os
+import joblib 
 from sklearn.datasets import load_iris
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
@@ -87,3 +89,10 @@ print("-" * 55)
 # 6. Generate a full breakdown by target species name
 print("Detailed Species-Wise Report:")
 print(classification_report(y_test, y_pred, target_names=iris.target_names))
+os.makedirs("../outputs", exist_ok=True)
+
+# Save the trained model
+model_path = "../outputs/iris_model.pkl"
+joblib.dump(model, model_path)
+
+print(f"Model saved to {model_path}")
