@@ -32,52 +32,33 @@ model2.fit(X_train, y_train)
 y_pred2 = model2.predict(X_test)
 print("k-NN accuracy:",accuracy_score(y_test, y_pred2))
 
-# 1. Load the Iris dataset
-iris = load_iris()
-X = iris.data
-y = iris.target
-class_names = iris.target_names  # ['setosa', 'versicolor', 'virginica']
-
-# 2. Split into training and testing sets
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-
-# 3. Train a classifier
-clf = RandomForestClassifier(random_state=42)
+clf = DecisionTreeClassifier(random_state=42)
 clf.fit(X_train, y_train)
+class_names = iris.target_names  # ['setosa', 'versicolor', 'virginica'
 
-# 4. Make predictions
+# 1. Make predictions
 y_pred = clf.predict(X_test)
 
-# 5. Compute the confusion matrix
+# 2. Compute the confusion matrixcl
 cm = confusion_matrix(y_test, y_pred)
 print("Confusion Matrix Array:")
 print(cm)
 
-# 6. Plot the visual confusion matrix
+# 3. Plot the visual confusion matrix
 disp = ConfusionMatrixDisplay(confusion_matrix=cm, display_labels=class_names)
 disp.plot(cmap=plt.cm.Blues)
 
 plt.title("Confusion Matrix for Iris Dataset")
 plt.show()
 
-# 1. Load the Iris dataset
-iris = load_iris()
-X = iris.data    # Features: sepal/petal dimensions
-y = iris.target  # Labels: 0 (setosa), 1 (versicolor), 2 (virginica)
-
-# 2. Split into training and testing sets (80% train, 20% test)
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=42
-)
-
-# 3. Initialize and train a classifier
-model = LogisticRegression(max_iter=200)
+# 1. Initialize and train a classifier
+model = DecisionTreeClassifier(random_state=42)
 model.fit(X_train, y_train)
 
-# 4. Predict the species on the test data
+# 2. Predict the species on the test data
 y_pred = model.predict(X_test)
 
-# 5. Calculate individual Precision and Recall scores
+# 3. Calculate individual Precision and Recall scores
 # Multi-class targets require an explicit 'average' parameter
 precision = precision_score(y_test, y_pred, average='macro')
 recall = recall_score(y_test, y_pred, average='macro')
@@ -89,10 +70,11 @@ print("-" * 55)
 # 6. Generate a full breakdown by target species name
 print("Detailed Species-Wise Report:")
 print(classification_report(y_test, y_pred, target_names=iris.target_names))
-os.makedirs("../outputs", exist_ok=True)
+output_folder = "../outputs"
+os.makedirs(output_folder, exist_ok=True)  # <-- This creates the folder if it doesn't exist
 
-# Save the trained model
-model_path = "../outputs/iris_model.pkl"
+# Save the model
+model_path = os.path.join(output_folder, "iris_model.pkl")
 joblib.dump(model, model_path)
 
 print(f"Model saved to {model_path}")
